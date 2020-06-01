@@ -1,0 +1,58 @@
+﻿@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Sistema de Gestão de Funcionários";
+}
+
+<div class="text-center">
+    <form asp-action="Filter" class="form-inline mb-3" method="get">
+        <div class="form-group">
+            <label asp-for="EmployeeFilter.FullName" class="control-label mr-2"></label>
+            <input asp-for="EmployeeFilter.FullName" class="form-control mr-2" />
+        </div>
+        <div class="form-group">
+            <label asp-for="EmployeeFilter.Age" class="control-label mr-2"></label>
+            <input asp-for="EmployeeFilter.Age" class="form-control mr-2" />
+        </div>
+        <div class="form-group ">
+            <label asp-for="EmployeeFilter.GenderId" class="control-label mr-2"></label>
+            <select asp-for="EmployeeFilter.GenderId" asp-items="@Model.EmployeeFilter.GenderList" class="form-control mr-2"></select>
+        </div>
+        <div class="form-group ">
+            <label asp-for="EmployeeFilter.SkillId" class="control-label mr-2"></label>
+            <select asp-for="EmployeeFilter.SkillId" asp-items="@Model.EmployeeFilter.SkillList" class="form-control mr-2"></select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Filtrar" class="btn btn-success float-right" />
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data de Nascimento</th>
+                <th>Idade</th>
+                <th>Email</th>
+                <th>Sexo</th>
+                <th>Habilidades</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.EmployeeList)
+            {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.Birthdate.ToShortDateString()</td>
+                <td>@employee.Age</td>
+                <td>@employee.Email</td>
+                <td>@employee.Gender</td>
+                <td>@(string.Join(", ", employee.SkillList))</td>
+                <td><a class="" asp-action="Create" asp-route-EmployeeId="@employee.Id">Editar</a> </td>
+            </tr>
+            }
+                
+        </tbody>
+    </table>
+</div>
